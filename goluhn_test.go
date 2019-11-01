@@ -43,3 +43,38 @@ func TestValidate(t *testing.T) {
 		})
 	}
 }
+
+func TestCalculate(t *testing.T) {
+	tests := []struct {
+		number    string
+		luhnDigit string
+		expected  string
+	}{
+		{"123456781234567", "0", "1234567812345670"},
+		{"111122223333444", "4", "1111222233334444"},
+		{"7992739871", "3", "79927398713"},
+		{"37465234695678234695782369485769236485736847536", "8", "374652346956782346957823694857692364857368475368"},
+	}
+	for _, test := range tests {
+		t.Run(test.expected, func(t *testing.T) {
+			l, n, err := Calculate(test.number)
+			if err != nil {
+				log.Printf("Unexpected err %+v", err)
+				t.Fail()
+			}
+			if test.luhnDigit != l {
+				log.Printf("Expected luhn digit %s. Actual luhn digit %s", test.luhnDigit, l)
+				t.Fail()
+			}
+			if n != test.expected {
+				log.Printf("Expected %s to generate luhn number %s", test.number, test.expected)
+				t.Fail()
+			}
+			err = Validate(n)
+			if err != nil {
+				log.Printf("Cannot validate derive luhn number %s. Error: %+v", n, err)
+				t.Fail()
+			}
+		})
+	}
+}
