@@ -1,4 +1,8 @@
 # goluhn: A luhn number generator, validator and calculator in Go
+[![Go Report Card](https://goreportcard.com/badge/github.com/ShiraazMoollatjie/goluhn?style=flat-square)](https://goreportcard.com/report/github.com/ShiraazMoollatjie/goluhn)
+[![Go Doc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](http://godoc.org/github.com/ShiraazMoollatjie/goluhn)
+[![Build status](https://ci.appveyor.com/api/projects/status/qiyndko2krd4ltep?svg=true)](https://ci.appveyor.com/project/ShiraazMoollatjie/goluhn)
+
 
 > The Luhn algorithm or Luhn formula, also known as the "modulus 10" or "mod 10" algorithm, named after its creator, 
 > IBM scientist Hans Peter Luhn, is a simple checksum formula used to validate a variety of identification numbers.
