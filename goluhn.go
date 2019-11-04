@@ -15,7 +15,7 @@ const (
 func Validate(digits string) error {
 
 	var sum int64
-	// Determine the right to left second digit.
+	// Determine the second digit because you scan from right to left.
 	parity := len(digits) % 2
 	for i, d := range digits {
 		if d < asciiZero || d > asciiTen {
