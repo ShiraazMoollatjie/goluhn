@@ -12,29 +12,11 @@ const (
 )
 
 // Validate returns an error if the provided string does not pass the luhn check.
-func Validate(digits string) error {
-
-	var sum int64
-	// Determine the second digit because you scan from right to left.
-	parity := len(digits) % 2
-	for i, d := range digits {
-		if d < asciiZero || d > asciiTen {
-			return errors.New("invalid digit")
-		}
-
-		d = d - asciiZero
-		// Double the value of every second digit.
-		if i%2 == parity {
-			d *= 2
-			// If the result of this doubling operation is greater than 9.
-			if d > 9 {
-				// The same final result can be found by subtracting 9 from that result.
-				d -= 9
-			}
-		}
-
-		// Take the sum of all the digits.
-		sum += int64(d)
+func Validate(number string) error {
+	p := len(number) % 2
+	sum, err := calculateLuhnSum(number, p)
+	if err != nil {
+		return err
 	}
 
 	// If the total modulo 10 is not equal to 0, then the number is invalid.
@@ -47,12 +29,26 @@ func Validate(digits string) error {
 
 // Calculate returns luhn check digit and the provided string number with its luhn check digit appended.
 func Calculate(number string) (string, string, error) {
+	p := (len(number) + 1) % 2
+	sum, err := calculateLuhnSum(number, p)
+	if err != nil {
+		return "", "", nil
+	}
+
+	luhn := sum % 10
+	if luhn != 0 {
+		luhn = 10 - luhn
+	}
+
+	// If the total modulo 10 is not equal to 0, then the number is invalid.
+	return strconv.FormatInt(luhn, 10), fmt.Sprintf("%s%d", number, luhn), nil
+}
+
+func calculateLuhnSum(number string, parity int) (int64, error) {
 	var sum int64
-	// Determine the right to left second digit.
-	parity := (len(number) + 1) % 2
 	for i, d := range number {
 		if d < asciiZero || d > asciiTen {
-			return "", "", errors.New("invalid digit")
+			return 0, errors.New("invalid digit")
 		}
 
 		d = d - asciiZero
@@ -70,11 +66,5 @@ func Calculate(number string) (string, string, error) {
 		sum += int64(d)
 	}
 
-	luhn := sum % 10
-	if luhn != 0 {
-		luhn = 10 - luhn
-	}
-
-	// If the total modulo 10 is not equal to 0, then the number is invalid.
-	return strconv.FormatInt(luhn, 10), fmt.Sprintf("%s%d", number, luhn), nil
+	return sum, nil
 }
