@@ -36,6 +36,17 @@ fmt.Printf("Check digit: %s\n", cd)
 fmt.Printf("Luhn number: %s\n", n)
 ```
 
+## Generation
+The `Generate` function returns a random luhn number of a provided size.
+```go
+n, err := goluhn.Generate(9)
+if res != nil {
+  return err
+}
+
+fmt.Printf("Luhn number: %s\n", n)
+```
+
 # References
 
 [Luhn algorithm on wikipedia](https://en.wikipedia.org/wiki/Luhn_algorithm)
