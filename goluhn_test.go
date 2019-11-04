@@ -2,6 +2,7 @@ package goluhn
 
 import (
 	"log"
+	"strconv"
 	"testing"
 )
 
@@ -74,6 +75,30 @@ func TestCalculate(t *testing.T) {
 			if err != nil {
 				log.Printf("Cannot validate derive luhn number %s. Error: %+v", n, err)
 				t.Fail()
+			}
+		})
+	}
+}
+
+func TestGenerate(t *testing.T) {
+	tests := []struct {
+		numberSize int
+		sampleSize int
+	}{
+		{1, 100},
+		{10, 1000},
+		{100, 1000},
+		{1000, 1000},
+	}
+
+	for _, test := range tests {
+		t.Run(strconv.Itoa(test.numberSize), func(t *testing.T) {
+			for i := 0; i < test.sampleSize; i++ {
+				err := Validate(Generate(test.numberSize))
+				if err != nil {
+					log.Printf("Unexpected err %+v", err)
+					t.Fail()
+				}
 			}
 		})
 	}

@@ -3,7 +3,10 @@ package goluhn
 import (
 	"errors"
 	"fmt"
+	"math/rand"
 	"strconv"
+	"strings"
+	"time"
 )
 
 const (
@@ -42,6 +45,19 @@ func Calculate(number string) (string, string, error) {
 
 	// If the total modulo 10 is not equal to 0, then the number is invalid.
 	return strconv.FormatInt(luhn, 10), fmt.Sprintf("%s%d", number, luhn), nil
+}
+
+// Generate will generate a valid luhn number of the provided length
+func Generate(length int) string {
+	rand.Seed(time.Now().UTC().UnixNano())
+
+	var s strings.Builder
+	for i := 0; i < length-1; i++ {
+		s.WriteString(strconv.Itoa(rand.Intn(9)))
+	}
+
+	_, res, _ := Calculate(s.String()) //ignore error because this will always be valid
+	return res
 }
 
 func calculateLuhnSum(number string, parity int) (int64, error) {
