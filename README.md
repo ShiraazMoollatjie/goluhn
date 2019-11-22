@@ -19,7 +19,7 @@ goluhn is a package that is able to:
 
 ```go
 err := goluhn.Validate("1111222233334444")
-if res != nil {
+if err != nil {
   return err
 }
 ```
@@ -28,7 +28,7 @@ if res != nil {
 The `Calculate` function returns the `luhnCheckDigit`, the `luhnNumber` (input number + check digit) or an `error`
 ```go
 cd, n, err := goluhn.Calculate("111122223333444")
-if res != nil {
+if err != nil {
   return err
 }
 
@@ -40,7 +40,7 @@ fmt.Printf("Luhn number: %s\n", n)
 The `Generate` function returns a random luhn number of a provided size.
 ```go
 n, err := goluhn.Generate(9)
-if res != nil {
+if err != nil {
   return err
 }
 
