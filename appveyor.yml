@@ -8,7 +8,7 @@ clone_folder: /usr/go/src/github.com/ShiraazMoollatjie/goluhn
 environment:
   GOPATH: /usr/go/
 
-stack: go 1.13.1
+stack: go 1.13
 
 before_test:
   - go vet ./...
